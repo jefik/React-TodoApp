@@ -1,5 +1,4 @@
 body {
-  background-color: rgb(199, 147, 230);
   font-family: "Montserrat", sans-serif;
 }
 
@@ -7,13 +6,22 @@ body {
   text-align: center;
 }
 
+.container {
+  padding: 25px;
+}
+
 .titles {
   word-break: break-all;
 }
 
 .upper {
+  margin-bottom: 25px;
 }
 
+.container {
+  position: relative;
+  z-index: 10;
+}
 .status-dot {
   width: 12px;
   height: 12px;
@@ -38,4 +46,12 @@ body {
 
 .status-completed {
   background-color: #dc3545;
+}
+
+/* MEDIA QUERIES */
+
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1520px;
+  }
 }
