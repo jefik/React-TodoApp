@@ -1,0 +1,41 @@
+body {
+  background-color: rgb(199, 147, 230);
+  font-family: "Montserrat", sans-serif;
+}
+
+#main {
+  text-align: center;
+}
+
+.titles {
+  word-break: break-all;
+}
+
+.upper {
+}
+
+.status-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.status-dot:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+.status-incomplete {
+  background-color: #198754;
+}
+
+.status-stopped {
+  background-color: #ffc107;
+}
+
+.status-completed {
+  background-color: #dc3545;
+}
