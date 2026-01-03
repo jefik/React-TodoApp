@@ -18,7 +18,7 @@ export default function Background() {
         cloudColor: 0xbd8ac5,
         lightColor: 0xd7d7d7,
         speed: 0.8,
-        texturePath: "public/images/noise.png",
+        texturePath: "/images/noise.png",
       });
     }
 
