@@ -15,18 +15,34 @@ function App() {
     setEditTitle(todo.title ?? "");
     setEditDeadline(formatDate(todo.deadline));
   };
-  const StatusDot = ({ status, className = "", ...props }) => {
-    return <span className={`status-dot status-${status} ${className}`} {...props} />;
-  };
+
   const getStatusClass = (status) => {
     if (status === "incomplete") return "status-incomplete";
     if (status === "stopped") return "status-stopped";
     if (status === "completed") return "status-completed";
     return "";
   };
+
   useEffect(() => {
     fetchTodos();
   }, []);
+
+  // ESCAPE LEAVE FUNC FOR MODAL
+  useEffect(() => {
+    if (!editingTodo) return;
+
+    const handleEsc = (e) => {
+      if (e.key === "Escape") {
+        setEditingTodo(null);
+      }
+    };
+
+    document.addEventListener("keydown", handleEsc);
+
+    return () => {
+      document.removeEventListener("keydown", handleEsc);
+    };
+  }, [editingTodo]);
 
   function formatDate(dateString) {
     if (!dateString) return "";
@@ -98,43 +114,47 @@ function App() {
 
   return (
     // Restyle everything!!!!
+
     <>
       <Background />
       <div className="clouds">
         <div className="container">
-          <h1 className="text-center mb-3">This is TODO LIST</h1>
+          <div className="app-header">
+            <h1 className="text-center mb-3">This is TODO LIST</h1>
 
-          <div className="row align-items-end upper">
-            {/* Title input */}
-            <div className="col-12 col-md-5">
-              <label className="form-label">Title</label>
-              <input
-                className="form-control"
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="Add a new TODO item"
-              />
-            </div>
+            <div className="row align-items-end upper">
+              {/* TITLE INPUT */}
+              <div className="col-12 col-md-5">
+                <label className="form-label">Title</label>
+                <input
+                  className="form-control"
+                  type="text"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  placeholder="Add a new TODO item"
+                />
+              </div>
 
-            {/* Deadline input */}
-            <div className="col-12 col-md-5">
-              <label className="form-label">Deadline</label>
-              <input
-                type="date"
-                className="form-control"
-                value={deadline}
-                onChange={(e) => setDeadline(e.target.value)}
-              />
-            </div>
+              {/* DEADLINE INPUT */}
+              <div className="col-12 col-md-5">
+                <label className="form-label">Deadline</label>
+                <input
+                  type="date"
+                  className="form-control"
+                  value={deadline}
+                  onChange={(e) => setDeadline(e.target.value)}
+                />
+              </div>
 
-            {/* Button */}
-            <div className="col-12 col-md-2 d-grid">
-              <button className="btn btn-primary">Add</button>
+              {/* BUTTON ADD*/}
+              <div className="col-12 col-md-2 d-grid">
+                <button className="btn btn-primary" onClick={addTodo}>
+                  Add
+                </button>
+              </div>
             </div>
           </div>
-
-          <div className="row">
+          <div className="row todos-row">
             {/*  INCOMPLETE  */}
             <TodoColumn
               title="Incomplete"
@@ -171,6 +191,50 @@ function App() {
           </div>
         </div>
       </div>
+
+      {/* RENDER EDIT MODAL */}
+      {editingTodo && (
+        <>
+          <div className="modal show d-block" tabIndex="-1">
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">Edit Todo</h5>
+                  <button type="button" className="btn-close" onClick={() => setEditingTodo(null)} />
+                </div>
+
+                <div className="modal-body">
+                  <label className="form-label">Title</label>
+                  <input
+                    className="form-control mb-2"
+                    value={editTitle}
+                    onChange={(e) => setEditTitle(e.target.value)}
+                  />
+
+                  <label className="form-label">Deadline</label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    value={editDeadline}
+                    onChange={(e) => setEditDeadline(e.target.value)}
+                  />
+                </div>
+
+                <div className="modal-footer">
+                  <button className="btn btn-secondary" onClick={() => setEditingTodo(null)}>
+                    Cancel
+                  </button>
+                  <button className="btn btn-primary" onClick={handleSave}>
+                    Save
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="modal-backdrop fade show" onClick={() => setEditingTodo(null)} />
+        </>
+      )}
     </>
   );
 }
