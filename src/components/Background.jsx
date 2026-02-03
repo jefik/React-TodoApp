@@ -32,6 +32,7 @@ export default function Background() {
 
   return (
     <div
+      className="cloud-overlay"
       ref={vantaRef}
       style={{
         position: "fixed",

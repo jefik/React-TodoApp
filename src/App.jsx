@@ -197,9 +197,8 @@ function App() {
       <div className="clouds">
         <div className="container">
           <div className="app-header">
-            <h1 className="text-center mb-3">This is TODO LIST</h1>
-
             <div className="row align-items-end upper">
+              <h1 className="text-center mb-3">This is TODO LIST</h1>
               {/* TITLE INPUT */}
               <div className="col-12 col-lg-5">
                 <h5 className="">Task</h5>
